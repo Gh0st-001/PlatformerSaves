@@ -272,7 +272,8 @@ bool PSPlayLayer::validSaveExists() {
 
 #if !defined(GEODE_IS_IOS)
 void PSPlayLayer::setupKeybinds() {
-    addEventListener<keybinds::InvokeBindFilter>(
+    addEventListener(
+        keybinds::InvokeBindFilter(nullptr, "save-game"_spr),
         [this](keybinds::InvokeBindEvent* event) {
             if (event->isDown() && canSave() && startSaveGame()) {
                 PSPauseLayer* l_pauseLayer = static_cast<PSPauseLayer*>(CCScene::get()->getChildByID("PauseLayer"));
@@ -283,8 +284,7 @@ void PSPlayLayer::setupKeybinds() {
                 }
             }
             return ListenerResult::Propagate;
-        },
-        "save-game"_spr
+        }
     );
 }
 #endif
