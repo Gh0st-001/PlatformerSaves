@@ -5,7 +5,7 @@
 #include "hooks/PauseLayer.hpp"
 #include "hooks/FMODAudioEngine.hpp"
 #if !defined(GEODE_IS_IOS)
-#include <keybinds/Keybinds.hpp>
+#include <Geode/Keybinds.hpp>
 #endif
 #include <util/algorithm.hpp>
 #include <util/filesystem.hpp>
