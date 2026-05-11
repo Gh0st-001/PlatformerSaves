@@ -10,12 +10,12 @@ $on_mod(Loaded) {
 }
 void setupKeybinds() {
     using namespace keybinds;
-    BindManager::get()->registerBindable({
+    geode::BindManager::get()->registerBindable({
         "save-game"_spr,
         "Save game",
         "Hotkey for quick saving",
-        { keybinds::Keybind::create(KEY_K, Modifier::None) },
-        Category::PLAY,
+        { geode::Keybind::create(KEY_K, Modifier::None) },
+        geode::Category::PLAY,
     });
 }
 #endif
