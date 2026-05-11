@@ -5,7 +5,6 @@
 #include "hooks/PauseLayer.hpp"
 #include "hooks/FMODAudioEngine.hpp"
 #if !defined(GEODE_IS_IOS)
-#include <Geode/utils/Keyboard.hpp>
 #endif
 #include <util/algorithm.hpp>
 #include <util/filesystem.hpp>
@@ -272,16 +271,10 @@ bool PSPlayLayer::validSaveExists() {
 
 #if !defined(GEODE_IS_IOS)
 void PSPlayLayer::setupKeybinds() {
-    addEventListener(
-        keybinds::InvokeBindFilter(nullptr, "save-game"_spr),
-        [this](keybinds::InvokeBindEvent* event) {
-            if (event->isDown() && canSave() && startSaveGame()) {
-                PSPauseLayer* l_pauseLayer = static_cast<PSPauseLayer*>(CCScene::get()->getChildByID("PauseLayer"));
-                if (l_pauseLayer) {
-                    if (l_pauseLayer->m_fields->m_saveCheckpointsSprite != nullptr) l_pauseLayer->m_fields->m_saveCheckpointsSprite->setColor({127,127,127});
-                    if (l_pauseLayer->m_fields->m_saveCheckpointsSprite != nullptr && l_pauseLayer->m_fields->m_saveCheckpointsSprite->getChildren()->count() > 0) static_cast<CCSprite*>(l_pauseLayer->m_fields->m_saveCheckpointsSprite->getChildren()->objectAtIndex(0))->setColor({127,127,127});
-                    if (l_pauseLayer->m_fields->m_saveCheckpointsButton != nullptr) l_pauseLayer->m_fields->m_saveCheckpointsButton->m_bEnabled = false;
-                }
+    this->template addEventListener<geode::KeyboardFilter>(
+        [this](geode::KeyboardEvent* event) {
+            if (event->getKey() == KEY_K && event->isDown() && canSave() && startSaveGame()) {
+                // handle save
             }
             return ListenerResult::Propagate;
         }
